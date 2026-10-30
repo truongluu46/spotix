@@ -28,3 +28,9 @@
 # os
 .DS_Store
 Thumbs.db
+
+# Local documentation
+/docs/
+**/secrets/
+.local-postgres/
+.local-maven/
