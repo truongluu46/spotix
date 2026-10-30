@@ -1,3 +1,38 @@
+server:
+  port: 8081
+
 spring:
+  config:
+    import: optional:file:../.env[.properties],optional:file:.env[.properties]
   application:
     name: auth-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/auth_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  jwt:
+    issuer: spotix-auth
+    audience: spotix-api
+    access-token-seconds: 900
+    private-key: ${JWT_PRIVATE_KEY:file:./secrets/private.pem}
+    public-key: ${JWT_PUBLIC_KEY:file:./secrets/public.pem}
